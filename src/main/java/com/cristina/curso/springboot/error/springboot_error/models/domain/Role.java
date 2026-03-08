@@ -4,6 +4,9 @@ public class Role {
 
     private String name;
 
+    public Role(String string) {
+        this.name = string;
+    }
 
     public String getName() {
         return name;

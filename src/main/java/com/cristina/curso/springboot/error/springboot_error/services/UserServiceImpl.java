@@ -2,9 +2,11 @@ package com.cristina.curso.springboot.error.springboot_error.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.cristina.curso.springboot.error.springboot_error.models.domain.Role;
 import com.cristina.curso.springboot.error.springboot_error.models.domain.User;
 
 import exceptions.UserNotFoundException;
@@ -22,10 +24,13 @@ public class UserServiceImpl implements UserService {
         users.add(new User(3L, "Jane", "Doe"));
         users.add(new User(4L, "Alice", "Smith"));
         users.add(new User(5L, "Bob", "Johnson"));
+        User userWithRole = new User(6L, "Charlie", "Brown");
+        userWithRole.setRole(new Role("Admin"));
+        users.add(userWithRole);
     }
 
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         User user = null;
         for (User u : users) {
             if (u.getId().equals(id)) {
@@ -34,10 +39,8 @@ public class UserServiceImpl implements UserService {
             }
             
         }
-        if (user == null) {
-            throw new UserNotFoundException("Error el usuario no existe!.");
-        }
-        return user;
+        
+        return Optional.ofNullable(user);
     }
 
 	@Override
